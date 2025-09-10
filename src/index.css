@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Beauty Center Design System - Elegant, Professional, Luxurious */
+
+@layer base {
+  :root {
+    /* Hanane Beauty Studio Color Palette */
+    --background: 35 20% 96%;           /* Soft peach cream background */
+    --foreground: 25 15% 15%;           /* Deep warm brown */
+    
+    /* Brand Colors */
+    --primary: 15 35% 72%;              /* Soft peach/rose */
+    --primary-foreground: 0 0% 100%;    /* White on peach */
+    
+    --secondary: 35 30% 88%;            /* Warm beige */
+    --secondary-foreground: 25 15% 25%; /* Deep brown on beige */
+    
+    --accent: 20 40% 82%;               /* Light coral accent */
+    --accent-foreground: 25 15% 25%;    /* Deep brown on coral */
+    
+    --muted: 35 20% 92%;                /* Light warm gray */
+    --muted-foreground: 25 10% 45%;     /* Medium warm gray */
+
+    
+    /* UI Element Colors */
+    --card: 35 25% 98%;                 /* Soft white cards */
+    --card-foreground: 25 15% 15%;      /* Deep brown on cards */
+    
+    --popover: 35 25% 98%;              /* Soft white popovers */
+    --popover-foreground: 25 15% 15%;   /* Deep brown on popovers */
+    
+    --border: 35 15% 85%;               /* Soft warm border */
+    --input: 35 15% 88%;                /* Light input background */
+    --ring: 15 35% 72%;                 /* Peach focus ring */
+    
+    --destructive: 0 75% 60%;           /* Soft red for errors */
+    --destructive-foreground: 0 0% 100%; /* White on red */
+    
+    --radius: 1rem;                     /* More rounded corners */
+    
+    /* Hanane Beauty Studio Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(35 20% 96%), hsl(25 25% 90%));
+    --gradient-peach: linear-gradient(135deg, hsl(15 35% 72%), hsl(20 40% 82%));
+    --gradient-soft: linear-gradient(135deg, hsl(35 30% 88%), hsl(40 25% 90%));
+    
+    /* Elegant Shadows */
+    --shadow-elegant: 0 4px 20px -4px hsl(20 15% 15% / 0.1);
+    --shadow-gold: 0 8px 32px -8px hsl(45 100% 51% / 0.3);
+    --shadow-soft: 0 2px 12px -2px hsl(20 15% 15% / 0.05);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .dark {
+    --background: 20 15% 8%;
+    --foreground: 30 25% 95%;
+    --card: 20 15% 10%;
+    --card-foreground: 30 25% 95%;
+    --popover: 20 15% 10%;
+    --popover-foreground: 30 25% 95%;
+    --primary: 45 100% 60%;
+    --primary-foreground: 20 15% 8%;
+    --secondary: 350 25% 20%;
+    --secondary-foreground: 30 25% 95%;
+    --muted: 20 15% 15%;
+    --muted-foreground: 30 15% 60%;
+    --accent: 35 35% 20%;
+    --accent-foreground: 30 25% 95%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 20 15% 20%;
+    --input: 20 15% 15%;
+    --ring: 45 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair;
+  }
+}
+
+@layer components {
+  /* Hanane Beauty Studio Specific Components */
+  .hero-text {
+    color: #b2525c;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+}
+  
+  .glass-card {
+    @apply backdrop-blur-sm bg-card/95 border border-border/20;
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .gold-shimmer {
+    @apply relative overflow-hidden bg-primary text-primary-foreground;
+  }
+  
+  .gold-shimmer::before {
+    content: '';
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(90deg, transparent, hsla(356, 29%, 70%, 0.385), transparent);
+    animation: shimmer 2s infinite;
+  }
+  
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .treatment-card {
+    @apply bg-card rounded-2xl p-6 transition-all duration-300 border border-border/10;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .treatment-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elegant);
+  }
+}
