@@ -1,6 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+
 
 const treatmentCategories = [
   {
@@ -33,14 +35,14 @@ const treatmentCategories = [
         description: "Soin pour redonner volume, douceur et éclat aux lèvres.",
         price: 180,
         duration: "75 min",
-        image: "/Аугментация губ.jpg"
+        image: "/download - 2025-09-12T193255.044.jpg"
       },
       {
         name: "Microneedling",
         description: "Technique qui stimule le collagène et améliore la texture de la peau.",
         price: 60,
         duration: "75 min",
-        image: "/microneedling.jpg"
+        image: "/Nano-Needling_ The Science and Benefits of This Non-Invasive Skin Treatment.jpg"
       },
       {
         name: "Candy lips",
@@ -54,70 +56,70 @@ const treatmentCategories = [
         description: "Correction légère après une prestation pour un résultat parfait.",
         price: 50,
         duration: "75 min",
-        image: "/retouche.jpg"
+        image: "/Benefits of Retinol. - 2025-09-12T103916.191.png"
       },
       {
         name: "Blanchiment Dentaire",
         description: "Éclaircissement des dents en douceur pour un sourire éclatant.",
         price: 70,
         duration: "75 min",
-        image: "/blanchiment.jpg"
+        image: "/Tired of living with a yellow smile_ At Cosmetic Dental Texas, we have got you covered! https___cosmeticdentaltexas_com_houston-services_teeth-whitening_.jpg"
       },
       {
         name: "Morpheus8",
         description: "Traitement anti-âge innovant combinant radiofréquence et microneedling pour raffermir la peau.",
         price: "À partir de 100",
         duration: "75 min",
-        image: "/morpheus8.jpg"
+        image: "/morph.jpg"
       },
       {
         name: "Skin Booster Soin",
         description: "Injection hydratante qui améliore la qualité de la peau et ravive son éclat.",
         price: "À partir de 120",
         duration: "75 min",
-        image: "/skinbooster.jpg"
+        image: "/Skinvive by Juvéderm Treatment in Raleigh, NC _ Beauty CO.jpg"
       },
       {
         name: "Détatouage",
         description: "Suppression progressive et sécurisée des tatouages ou maquillage permanent.",
         price: 70,
         duration: "75 min",
-        image: "/detatouage.jpg"
+        image: "/Curs Cursuri de Estetica - Start Academy.jpg"
       },
       {
         name: "Bb Glow",
         description: "Soin perfecteur qui unifie le teint et donne un effet peau de bébé.",
         price: 70,
         duration: "75 min",
-        image: "/bbglow.jpg"
+        image: "/BB Glow (1).jpg"
       },
       {
         name: "Rehaussement des Cils",
         description: "Courbure naturelle et durable des cils pour un regard intense.",
         price: 35,
         duration: "75 min",
-        image: "/cils.jpg"
+        image: "/Lash lifting  Cílios.jpg"
       },
       {
         name: "Rehaussement des Cils avec Teinture",
         description: "Courbure et coloration des cils pour un effet mascara longue durée.",
         price: 40,
         duration: "75 min",
-        image: "/cils-teinture.jpg"
+        image: "/Wimper Lift.jpg"
       },
       {
         name: "Peeling Zina",
         description: "Exfoliation douce qui élimine les impuretés et ravive l’éclat du teint.",
         price: 70,
         duration: "75 min",
-        image: "/peeling-zina.jpg"
+        image: "/download - 2025-09-12T190126.859.jpg"
       },
       {
         name: "Peeling Carbon",
         description: "Soin au laser avec masque carbone pour resserrer les pores et purifier la peau.",
         price: 70,
         duration: "75 min",
-        image: "/peeling-carbon.jpg"
+        image: "/Rejuvenate Your Skin with Carbon Laser Treatment at Estatico Facialbar.jpg"
       },
 
       {
@@ -125,7 +127,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: "À partir de 120 (selon les zone)",
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/How Dermal Fillers Can Change The Jawline_ Before and After.jpg"
       },
 
       {
@@ -133,7 +135,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: 120,
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/Révolutionnez votre routine beauté avec l'Hyaluron Pen.jpg"
       },
 
       {
@@ -141,7 +143,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: 60 ,
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/Лазерная эпиляция эстетика.jpg"
       },
     ]
   },
@@ -154,7 +156,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: "À partir de 100",
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/download - 2025-09-12T215228.350.jpg"
       },
       
        {
@@ -162,7 +164,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: 40 ,
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/Benefits of Retinol. - 2025-09-12T224837.361.png"
       },
 
       {
@@ -170,7 +172,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: 60 ,
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/download - 2025-09-12T223842.759.jpg"
       },
 
       {
@@ -178,7 +180,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: 70 ,
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/Laser hair removal on the hand on a light background hair removal depilation _ Premium Photo.jpg"
       },
 
       {
@@ -186,7 +188,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: 99 ,
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg"
       },
 
       {
@@ -194,7 +196,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: 130 ,
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg"
       },
 
        {
@@ -202,7 +204,7 @@ const treatmentCategories = [
         description: "Injections ciblées pour dissoudre les graisses localisées.",
         price: 150 ,
         duration: "60 min",
-        image: "/lemon-bottle.jpg"
+        image: "/download - 2025-09-12T224050.429.jpg"
       },
       
     ]
@@ -271,7 +273,10 @@ const Treatments = () => {
                           {treatment.price}€
                         </div>
                         <Button size="sm" className="bg-[#b2525c] text-white">
-                          Réserver
+                         <Link to="/bookingsimple" state={{ treatment }}>
+                                             
+                                               Réserver 
+                                             </Link>
                         </Button>
                       </div>
                     </div>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Sparkles, Clock, Star, ArrowRight } from "lucide-react";
+import { Calendar, Clock, Star, ArrowRight } from "lucide-react";
 import heroImage from "@/assets/close-up-brunette-woman-with-cream-jar.jpg";
 
 const Index = () => {
@@ -13,32 +13,35 @@ const Index = () => {
       name: "HydraFacial",
       description:
         "Soin du visage en profondeur : nettoyage et hydratation pour une peau éclatante.",
-      price: 120,
+      price: 70,
       duration: "60 min",
       rating: 5,
       category: "Visage",
-       image: "/Hydrafacial treatment (2).jpg"
+      image: "/Hydrafacial treatment (2).jpg",
     },
     {
       name: "Microblading",
       description:
         "Sublimation semi-permanente des sourcils pour un résultat naturel.",
-      price: 180,
+      price: 150,
       duration: "120 min",
       rating: 5,
       category: "Visage",
-      image: "/Le microblading, nouvelle méthode pour des sourcils de rêve.jpg"
+      image: "/Le microblading, nouvelle méthode pour des sourcils de rêve.jpg",
     },
     {
       name: "Répulpeur des lèvres",
       description: "Repulpez vos lèvres pour un effet naturel et irrésistible.",
-      price: 90,
+      price: 180,
       duration: "60 min",
       rating: 5,
       category: "Visage",
-      image: "/How Long Does Bruising Last After Lip Fillers____.jpg"
+      image: "/download - 2025-09-12T193255.044.jpg",
     },
   ];
+
+  // First treatment for hero section
+  const heroTreatment = popularTreatments[0];
 
   const projects = [
     { id: 1, title: "Hydrafacial", image: "/Benefits of Retinol. - 2025-06-24T224848.398.png" },
@@ -77,13 +80,12 @@ const Index = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button asChild size="lg" className="bg-[#b2525c] text-white text-lg px-8 py-6 gold-shimmer">
-                <Link to="/booking">
-                  <Calendar className="w-5 h-5 mr-3" />
-                  Réservez Votre Rendez-vous
+              <Button asChild className="w-full bg-[#b2525c] text-white">
+                <Link to="/booking" state={{ treatment: heroTreatment }}>
+                <Calendar className="w-4 h-4 mr-2" />
+                  Réserver ce Soin
                 </Link>
               </Button>
-
               <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
                 <Link to="/treatments">
                   Voir Tous les Soins
@@ -96,88 +98,88 @@ const Index = () => {
       </section>
 
       {/* Section Soins Populaires */}
-      {/* Section Soins Populaires */}
-<section className="py-20">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-16">
-      <Badge variant="secondary" className="mb-4 bg-[#d2a3a8c9]">
-        Les Plus Populaires
-      </Badge>
-      <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-        <span className="hero-text">Soins en Vedette</span>
-      </h2>
-      <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-        Découvrez nos soins de beauté les plus prisés, appréciés pour leurs résultats exceptionnels et leur expérience luxueuse.
-      </p>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {popularTreatments.map((treatment, index) => (
-        <Card key={index} className="treatment-card group cursor-pointer">
-          <div className="aspect-[4/3] rounded-lg mb-6 overflow-hidden relative">
-            {/* ✅ Add image here */}
-            {treatment.image ? (
-              <img
-                src={treatment.image}
-                alt={treatment.name}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-secondary/20 to-accent/20 flex items-center justify-center">
-                <span className="text-muted-foreground">Image à venir</span>
-              </div>
-            )}
-
-            <Badge className="absolute top-4 left-4" variant="secondary">
-              {treatment.category}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <Badge variant="secondary" className="mb-4 bg-[#d2a3a8c9]">
+              Les Plus Populaires
             </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              <span className="hero-text">Soins en Vedette</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Découvrez nos soins de beauté les plus prisés, appréciés pour leurs résultats exceptionnels et leur expérience luxueuse.
+            </p>
           </div>
 
-          <div className="space-y-4">
-            <div className="flex items-start justify-between">
-              <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                {treatment.name}
-              </h3>
-              <div className="flex items-center space-x-1">
-                {[...Array(treatment.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                ))}
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {popularTreatments.map((treatment, index) => (
+              <Card key={index} className="treatment-card group cursor-pointer">
+                <div className="aspect-[4/3] rounded-lg mb-6 overflow-hidden relative">
+                  {treatment.image ? (
+                    <img
+                      src={treatment.image}
+                      alt={treatment.name}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-secondary/20 to-accent/20 flex items-center justify-center">
+                      <span className="text-muted-foreground">Image à venir</span>
+                    </div>
+                  )}
 
-            <p className="text-muted-foreground leading-relaxed">
-              {treatment.description}
-            </p>
+                  <Badge className="absolute top-4 left-4" variant="secondary">
+                    {treatment.category}
+                  </Badge>
+                </div>
 
-            <div className="flex items-center justify-between pt-2 border-t border-border">
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                <Clock className="w-4 h-4" />
-                <span>{treatment.duration}</span>
-              </div>
-              <div className="text-2xl font-bold text-primary">
-                {treatment.price}€
-              </div>
-            </div>
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                      {treatment.name}
+                    </h3>
+                    <div className="flex items-center space-x-1">
+                      {[...Array(treatment.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                      ))}
+                    </div>
+                  </div>
 
-            <Button asChild className="w-full bg-[#b2525c] text-white">
-              <Link to="/booking">Réserver ce Soin</Link>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {treatment.description}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-border">
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      <span>{treatment.duration}</span>
+                    </div>
+                    <div className="text-2xl font-bold text-primary">
+                      {treatment.price}€
+                    </div>
+                  </div>
+
+                  <Button asChild className="w-full bg-[#b2525c] text-white">
+                    <Link to="/bookingsimple" state={{ treatment }}>
+                    
+                      Réserver ce Soin
+                    </Link>
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Button asChild variant="outline" size="lg" className="px-8">
+              <Link to="/treatments">
+                Voir Tous les Soins
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Link>
             </Button>
           </div>
-        </Card>
-      ))}
-    </div>
-
-    <div className="text-center mt-12">
-      <Button asChild variant="outline" size="lg" className="px-8">
-        <Link to="/treatments">
-          Voir Tous les Soins
-          <ArrowRight className="w-5 h-5 ml-2" />
-        </Link>
-      </Button>
-    </div>
-  </div>
-</section>
-
+        </div>
+      </section>
 
       {/* Section Projets */}
       <section className="py-20 -mt-17 bg-white">
@@ -198,7 +200,7 @@ const Index = () => {
                       alt={project.title}
                       className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 " />
+                    <div className="absolute inset-0" />
                   </div>
                   <h3 className="mt-4 text-lg font-medium text-center">{project.title}</h3>
                 </div>
@@ -224,7 +226,7 @@ const Index = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
                 <Button asChild size="lg" className="bg-[#b2525c] text-white text-lg px-8 py-6">
-                  <Link to="/booking">
+                  <Link to="/bookingsimple" state={{ treatment: heroTreatment }}>
                     <Calendar className="w-5 h-5 mr-3" />
                     Réserver Maintenant
                   </Link>

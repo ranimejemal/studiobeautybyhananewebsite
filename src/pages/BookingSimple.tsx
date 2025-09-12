@@ -1,32 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
-import emailjs from "@emailjs/browser";
 import { Calendar, Clock, Check, ArrowLeft, ArrowRight } from "lucide-react";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import emailjs from "@emailjs/browser";
 
-
+// Full treatment categories
+const treatmentCategories = [
+  {
+    id: "face",
+    title: "Visage",
+    treatments: [
+      { name: "HydraFacial", description: "Nettoyage en profondeur, exfoliation et hydratation intense pour une peau éclatante.", price: 70, duration: "60 min", image: "/Hydrafacial treatment (2).jpg" },
+      { name: "Microblading", description: "Technique semi-permanente qui redessine et comble les sourcils pour un résultat naturel.", price: 150, duration: "120 min", image: "/Le microblading, nouvelle méthode pour des sourcils de rêve.jpg" },
+      { name: "Microshading", description: "Effet poudré semi-permanent pour des sourcils plus définis et élégants.", price: 150, duration: "75 min", image: "/annyko_com.jpg" },
+      { name: "Répulpeur des lèvres", description: "Soin pour redonner volume, douceur et éclat aux lèvres.", price: 180, duration: "75 min", image: "/download - 2025-09-12T193255.044.jpg" },
+      { name: "Microneedling", description: "Technique qui stimule le collagène et améliore la texture de la peau.", price: 60, duration: "75 min", image: "/Nano-Needling_ The Science and Benefits of This Non-Invasive Skin Treatment.jpg" },
+      { name: "Candy lips", description: "Pigmentation semi-permanente pour des lèvres colorées et naturelles.", price: 150, duration: "75 min", image: "/Перманентный макияж губ (5).jpg" },
+      { name: "Retouche (3 à 4 semaines)", description: "Correction légère après une prestation pour un résultat parfait.", price: 50, duration: "75 min", image: "/Benefits of Retinol. - 2025-09-12T103916.191.png" },
+      { name: "Blanchiment Dentaire", description: "Éclaircissement des dents en douceur pour un sourire éclatant.", price: 70, duration: "75 min", image: "/Tired of living with a yellow smile_ At Cosmetic Dental Texas, we have got you covered! https___cosmeticdentaltexas_com_houston-services_teeth-whitening_.jpg" },
+      { name: "Morpheus8", description: "Traitement anti-âge innovant combinant radiofréquence et microneedling pour raffermir la peau.", price: "À partir de 100", duration: "75 min", image: "/morph.jpg" },
+      { name: "Skin Booster Soin", description: "Injection hydratante qui améliore la qualité de la peau et ravive son éclat.", price: "À partir de 120", duration: "75 min", image: "/Skinvive by Juvéderm Treatment in Raleigh, NC _ Beauty CO.jpg" },
+      { name: "Détatouage", description: "Suppression progressive et sécurisée des tatouages ou maquillage permanent.", price: 70, duration: "75 min", image: "/Curs Cursuri de Estetica - Start Academy.jpg" },
+      { name: "Bb Glow", description: "Soin perfecteur qui unifie le teint et donne un effet peau de bébé.", price: 70, duration: "75 min", image: "/BB Glow (1).jpg" },
+      { name: "Rehaussement des Cils", description: "Courbure naturelle et durable des cils pour un regard intense.", price: 35, duration: "75 min", image: "/Lash lifting  Cílios.jpg" },
+      { name: "Rehaussement des Cils avec Teinture", description: "Courbure et coloration des cils pour un effet mascara longue durée.", price: 40, duration: "75 min", image: "/Wimper Lift.jpg" },
+      { name: "Peeling Zina", description: "Exfoliation douce qui élimine les impuretés et ravive l’éclat du teint.", price: 70, duration: "75 min", image: "/download - 2025-09-12T190126.859.jpg" },
+      { name: "Peeling Carbon", description: "Soin au laser avec masque carbone pour resserrer les pores et purifier la peau.", price: 70, duration: "75 min", image: "/Rejuvenate Your Skin with Carbon Laser Treatment at Estatico Facialbar.jpg" },
+      { name: "Brûlage de Graisse double menton KYBELLA", description: "Injections ciblées pour dissoudre les graisses localisées.", price: "À partir de 120 (selon les zone)", duration: "60 min", image: "/How Dermal Fillers Can Change The Jawline_ Before and After.jpg" },
+      { name: "Hyaluronidase", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 120, duration: "60 min", image: "/Révolutionnez votre routine beauté avec l'Hyaluron Pen.jpg" },
+      { name: "Epilation Laser Diode Visage Complet(lèvres , cou , menton)", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 60, duration: "60 min", image: "/Лазерная эпиляция эстетика.jpg" },
+    ],
+  },
+  {
+    id: "body",
+    title: "Corps",
+    treatments: [
+      { name: "Lemon Bottle selon les parties", description: "Injections ciblées pour dissoudre les graisses localisées.", price: "À partir de 100", duration: "60 min", image: "/download - 2025-09-12T215228.350.jpg" },
+      { name: "Nuque", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 40, duration: "60 min", image: "/Benefits of Retinol. - 2025-09-12T224837.361.png" },
+      { name: "Aiselles", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 60, duration: "60 min", image: "/download - 2025-09-12T223842.759.jpg" },
+      { name: "Demi-bras", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 70, duration: "60 min", image: "/Laser hair removal on the hand on a light background hair removal depilation _ Premium Photo.jpg" },
+      { name: "3 zones aux chois", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 99, duration: "60 min", image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg" },
+      { name: "5 zones aux chois", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 130, duration: "60 min", image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg" },
+      { name: "Corps Complet", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 150, duration: "60 min", image: "/download - 2025-09-12T224050.429.jpg" },
+    ],
+  },
+];
 
 const Booking = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedTreatment, setSelectedTreatment] = useState<any>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  // 👉 Pré-remplissage si on vient d'un "Réserver ce soin"
-  useEffect(() => {
-  if (location.state?.treatment) {
-    setSelectedTreatment(location.state.treatment); // ✅ corriger ici
-  }
-}, [location.state]);
-
-
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [clientInfo, setClientInfo] = useState({
@@ -36,37 +66,18 @@ const Booking = () => {
     notes: "",
   });
 
-  const safeString = (value: any) => (value ? value.toString() : "");
+  // Flatten all treatments for easy mapping
+  const allTreatments = treatmentCategories.flatMap(cat => cat.treatments.map((t, index) => ({ ...t, id: `${cat.id}-${index}` })));
 
-  const treatments = [
-    { id: 1, name: "HydraFacial", description: "Nettoyage en profondeur, exfoliation et hydratation intense pour une peau éclatante.", price: 70, duration: "60 min", image: "/Hydrafacial treatment (2).jpg" },
-    { id: 2, name: "Microblading", description: "Technique semi-permanente qui redessine et comble les sourcils pour un résultat naturel.", price: 150, duration: "120 min", image: "/Le microblading, nouvelle méthode pour des sourcils de rêve.jpg" },
-    { id: 3, name: "Microshading", description: "Effet poudré semi-permanent pour des sourcils plus définis et élégants.", price: 150, duration: "75 min", image: "/annyko_com.jpg" },
-    { id: 4, name: "Répulpeur des lèvres", description: "Soin pour redonner volume, douceur et éclat aux lèvres.", price: 180, duration: "75 min", image: "/download - 2025-09-12T193255.044.jpg" },
-    { id: 5, name: "Microneedling", description: "Technique qui stimule le collagène et améliore la texture de la peau.", price: 60, duration: "75 min", image: "/Nano-Needling_ The Science and Benefits of This Non-Invasive Skin Treatment.jpg" },
-    { id: 6, name: "Candy lips", description: "Pigmentation semi-permanente pour des lèvres colorées et naturelles.", price: 150, duration: "75 min", image: "/Перманентный макияж губ (5).jpg" },
-    { id: 7, name: "Retouche (3 à 4 semaines)", description: "Correction légère après une prestation pour un résultat parfait.", price: 50, duration: "75 min", image: "/Benefits of Retinol. - 2025-09-12T103916.191.png" },
-    { id: 8, name: "Blanchiment Dentaire", description: "Éclaircissement des dents en douceur pour un sourire éclatant.", price: 70, duration: "75 min", image: "/Tired of living with a yellow smile_ At Cosmetic Dental Texas, we have got you covered! https___cosmeticdentaltexas_com_houston-services_teeth-whitening_.jpg" },
-    { id: 9, name: "Morpheus8", description: "Traitement anti-âge innovant combinant radiofréquence et microneedling pour raffermir la peau.", price: "À partir de 100", duration: "75 min", image: "/morph.jpg" },
-    { id: 10, name: "Skin Booster Soin", description: "Injection hydratante qui améliore la qualité de la peau et ravive son éclat.", price: "À partir de 120", duration: "75 min", image: "/Skinvive by Juvéderm Treatment in Raleigh, NC _ Beauty CO.jpg" },
-    { id: 11, name: "Détatouage", description: "Suppression progressive et sécurisée des tatouages ou maquillage permanent.", price: 70, duration: "75 min", image: "/Curs Cursuri de Estetica - Start Academy.jpg" },
-    { id: 12, name: "Bb Glow", description: "Soin perfecteur qui unifie le teint et donne un effet peau de bébé.", price: 70, duration: "75 min", image: "/BB Glow (1).jpg" },
-    { id: 13, name: "Rehaussement des Cils", description: "Courbure naturelle et durable des cils pour un regard intense.", price: 35, duration: "75 min", image: "/Lash lifting  Cílios.jpg" },
-    { id: 14, name: "Rehaussement des Cils avec Teinture", description: "Courbure et coloration des cils pour un effet mascara longue durée.", price: 40, duration: "75 min", image: "/Wimper Lift.jpg" },
-    { id: 15, name: "Peeling Zina", description: "Exfoliation douce qui élimine les impuretés et ravive l’éclat du teint.", price: 70, duration: "75 min", image: "/download - 2025-09-12T190126.859.jpg" },
-    { id: 16, name: "Peeling Carbon", description: "Soin au laser avec masque carbone pour resserrer les pores et purifier la peau.", price: 70, duration: "75 min", image: "/Rejuvenate Your Skin with Carbon Laser Treatment at Estatico Facialbar.jpg" },
-    { id: 17, name: "Brûlage de Graisse double menton KYBELLA", description: "Injections ciblées pour dissoudre les graisses localisées.", price: "À partir de 120 (selon les zones)", duration: "60 min", image: "/How Dermal Fillers Can Change The Jawline_ Before and After.jpg" },
-    { id: 18, name: "Hyaluronidase", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 120, duration: "60 min", image: "/Révolutionnez votre routine beauté avec l'Hyaluron Pen.jpg" },
-    { id: 19, name: "Epilation Laser Diode Visage Complet (lèvres, cou, menton)", description: "Épilation laser efficace et durable pour un visage net.", price: 60, duration: "60 min", image: "/Лазерная эпиляция эстетика.jpg" },
-    { id: 20, name: "Lemon Bottle selon les parties", description: "Injections ciblées pour dissoudre les graisses localisées.", price: "À partir de 100", duration: "60 min", image: "/download - 2025-09-12T215228.350.jpg" },
-    { id: 21, name: "Nuque", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 40, duration: "60 min", image: "/Benefits of Retinol. - 2025-09-12T224837.361.png" },
-    { id: 22, name: "Aisselles", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 60, duration: "60 min", image: "/download - 2025-09-12T223842.759.jpg" },
-    { id: 23, name: "Demi-bras", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 70, duration: "60 min", image: "/Laser hair removal on the hand on a light background hair removal depilation _ Premium Photo.jpg" },
-    { id: 24, name: "3 zones au choix", description: "Forfait pour traiter 3 zones différentes.", price: 99, duration: "60 min", image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg" },
-    { id: 25, name: "5 zones au choix", description: "Forfait pour traiter 5 zones différentes.", price: 130, duration: "60 min", image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg" },
-    { id: 26, name: "Corps Complet", description: "Traitement global sur l’ensemble du corps.", price: 150, duration: "60 min", image: "/download - 2025-09-12T224050.429.jpg" }
-  ];
+  useEffect(() => {
+    if (location.state?.treatment) {
+      setSelectedTreatment(location.state.treatment);
+      setCurrentStep(2);
+    }
+  }, [location.state]);
 
+  const availableTimes = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"];
+  const formatDate = (date: Date) => date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "short" });
   const getWeekDays = (start: Date) => {
     const days = [];
     const current = new Date(start);
@@ -76,48 +87,28 @@ const Booking = () => {
     }
     return days;
   };
+  const weekDays = getWeekDays(new Date());
+  const nextStep = () => currentStep < 4 && setCurrentStep(currentStep + 1);
+  const prevStep = () => currentStep > 1 && setCurrentStep(currentStep - 1);
+  const formatPrice = (price: string | number) => typeof price === "number" ? `${price}€` : price;
 
-  const [startDate] = useState(new Date());
-  const weekDays = getWeekDays(startDate);
-
-  const availableTimes = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"];
-
-  const formatDate = (date: Date) =>
-    date.toLocaleDateString("fr-FR", {
-      weekday: "long",
-      day: "numeric",
-      month: "short",
-    });
-
-  const nextStep = () => { if (currentStep < 4) setCurrentStep(currentStep + 1); };
-  const prevStep = () => { if (currentStep > 1) setCurrentStep(currentStep - 1); };
-
-  // ======= FIXED EMAILJS SUBMISSION =======
   const handleSubmit = async () => {
-    // check required fields
     if (!selectedTreatment || !selectedDate || !selectedTime || !clientInfo.name || !clientInfo.email || !clientInfo.phone) {
       alert("Veuillez remplir tous les champs obligatoires.");
       return;
     }
 
     const templateParams = {
-  treatment_name: (selectedTreatment?.name || "").toString(),
-  treatment_duration: (selectedTreatment?.duration || "").toString(),
-  treatment_price: (selectedTreatment?.price || "").toString(),
-  date: selectedDate
-    ? new Date(selectedDate).toLocaleDateString("fr-FR", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-      })
-    : "",
-  time: (selectedTime || "").toString(),
-  client_name: (clientInfo.name || "").toString(),
-  client_email: (clientInfo.email || "").toString(),
-  client_phone: (clientInfo.phone || "").toString(),
-  client_notes: (clientInfo.notes || "").toString(),
-};
-
+      treatment_name: selectedTreatment.name,
+      treatment_duration: selectedTreatment.duration,
+      treatment_price: formatPrice(selectedTreatment.price),
+      date: new Date(selectedDate).toLocaleDateString("fr-FR", { weekday: "long", month: "long", day: "numeric" }),
+      time: selectedTime,
+      client_name: clientInfo.name,
+      client_email: clientInfo.email,
+      client_phone: clientInfo.phone,
+      client_notes: clientInfo.notes,
+    };
 
     try {
       const response = await emailjs.send(
@@ -127,17 +118,13 @@ const Booking = () => {
         "Wvb_KoiVDKfzb33fT"
       );
 
-      console.log("EmailJS response:", response);
-
       if (response.status === 200) {
-        navigate("/confirmation", {
-          state: { treatment: selectedTreatment, date: selectedDate, time: selectedTime, clientInfo },
-        });
+        navigate("/confirmation", { state: { treatment: selectedTreatment, date: selectedDate, time: selectedTime, clientInfo } });
       } else {
         alert("Erreur lors de l'envoi de l'email. Veuillez réessayer.");
       }
     } catch (error) {
-      console.error("Erreur EmailJS:", error);
+      console.error(error);
       alert("Impossible d’envoyer l’email. Vérifiez votre connexion ou la configuration EmailJS.");
     }
   };
@@ -150,9 +137,7 @@ const Booking = () => {
             <h1 className="text-4xl font-bold text-foreground mb-4">
               Réservez votre <span className="hero-text">Rendez-vous</span>
             </h1>
-            <p className="text-sm text-black">
-              Suivez ces étapes simples pour planifier votre soin de beauté
-            </p>
+            <p className="text-sm text-black">Suivez ces étapes simples pour planifier votre soin de beauté</p>
           </div>
 
           <Card className="p-8 glass-card">
@@ -164,23 +149,16 @@ const Booking = () => {
                   <p className="text-muted-foreground">Choisissez le service souhaité</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {treatments.map((treatment) => (
+                  {allTreatments.map((treatment) => (
                     <Card
                       key={treatment.id}
                       className={`p-4 cursor-pointer border-2 transition-all ${selectedTreatment?.id === treatment.id ? "border-[#b2525c] bg-[#b2525c]/5" : "border-border"}`}
                       onClick={() => setSelectedTreatment(treatment)}
                     >
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-semibold">{treatment.name}</h3>
-                          <div className="flex items-center gap-2 mt-2">
-                            <Badge variant="secondary">{treatment.duration}</Badge>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-xl font-bold text-[#b2525c]">{treatment.price}€</span>
-                        </div>
-                      </div>
+                      <h3 className="font-semibold">{treatment.name}</h3>
+                      <p className="text-sm">{treatment.description}</p>
+                      <Badge variant="secondary">{treatment.duration}</Badge>
+                      <p className="text-xl font-bold text-[#b2525c] mt-2">{formatPrice(treatment.price)}</p>
                     </Card>
                   ))}
                 </div>
@@ -281,7 +259,7 @@ const Booking = () => {
                       </div>
                       <div>
                         <h4 className="font-medium text-foreground mb-2">Prix</h4>
-                        <p className="text-xl font-bold text-primary">{selectedTreatment?.price}€</p>
+                        <p className="text-xl font-bold text-primary">{formatPrice(selectedTreatment?.price)}</p>
                       </div>
                       <div>
                         <h4 className="font-medium text-foreground mb-2">Date & Heure</h4>

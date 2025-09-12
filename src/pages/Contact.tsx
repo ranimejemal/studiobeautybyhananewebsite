@@ -33,20 +33,20 @@ const Contact = () => {
     setLoading(true);
 
     const templateParams = {
-      name: `${safeString(formData.firstName)} ${safeString(formData.lastName)}`, // {{name}}
-      time: new Date().toLocaleString(), // {{time}}
-      message: safeString(formData.message), // {{message}}
-      client_email: safeString(formData.email), // {{client_email}}
-      client_phone: safeString(formData.phone), // {{client_phone}}
-      subject: safeString(formData.subject), // {{subject}} if you want it
+      name: `${safeString(formData.firstName)} ${safeString(formData.lastName)}`,
+      time: new Date().toLocaleString(),
+      message: safeString(formData.message),
+      client_email: safeString(formData.email), 
+      client_phone: safeString(formData.phone), 
+      subject: safeString(formData.subject), 
     };
 
     try {
       const response = await emailjs.send(
-        "service_uty1bp6", // replace with your service ID
-        "template_a04215t", // replace with your template ID
+        "service_uty1bp6", 
+        "template_a04215t",
         templateParams,
-        "Wvb_KoiVDKfzb33fT" // replace with your public key
+        "Wvb_KoiVDKfzb33fT"
       );
 
       console.log("EmailJS response:", response);
