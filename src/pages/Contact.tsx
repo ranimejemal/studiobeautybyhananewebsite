@@ -134,7 +134,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Email</h3>
-                    <p className="text-muted-foreground">info@beautycenter.com</p>
+                    <p className="text-muted-foreground">contact@beautycenter.com</p>
                   </div>
                 </div>
               </Card>
@@ -147,9 +147,9 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Horaires d'Ouverture</h3>
                     <div className="text-muted-foreground space-y-1">
-                      <p>Lundi - Vendredi : 9h00 - 19h00</p>
-                      <p>Samedi : 9h00 - 18h00</p>
-                      <p>Dimanche : 10h00 - 17h00</p>
+                      <p>Lundi - Vendredi : 9h00 - 11h00  / 13h00 - 19h00</p>
+                      <p>Samedi : 11h00 - 19h00</p>
+                      
                     </div>
                   </div>
                 </div>
