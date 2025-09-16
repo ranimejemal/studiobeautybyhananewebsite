@@ -145,6 +145,13 @@ const treatmentCategories = [
         duration: "60 min",
         image: "/Лазерная эпиляция эстетика.jpg"
       },
+      {
+        name: "Lifting Naturel",
+        description: "Injections ciblées pour lisser les rides et détendre les muscles du visage.",
+        price: 250 ,
+        duration: "60 min",
+        image: "/botox.jpg"
+      },
     ]
   },
   {
