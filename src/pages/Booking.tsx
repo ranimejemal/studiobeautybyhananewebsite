@@ -192,48 +192,60 @@ const weekDays = getWeekDays(startDate, 14);
           )}
 
           {/* Step 2: Date & Time */}
-          {currentStep === 2 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-center mb-2">Sélectionnez la date et l’heure</h2>
-              <p className="text-center text-muted-foreground text-sm mb-4">Choisissez votre créneau préféré</p>
-              <div className="overflow-x-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-4">
-                  {weekDays.map((day) =>
-                    day.getDay() === 0 ? null : (
-                      <div key={day.toISOString()} className="flex flex-col">
-                        <div className="text-center font-semibold mb-2">{formatDate(day)}</div>
-                        <div className="space-y-2">
-                          {getAvailableTimes(day).map((slot) => (
-                            <button
-  key={slot}
-  onClick={() => {
-    const isoDate = day.toISOString().split("T")[0];
-    setSelectedDate(isoDate);
-    setSelectedTime(slot);
-  }}
-  className={`w-full py-2 rounded transition ${
-    selectedDate === day.toISOString().split("T")[0] && selectedTime === slot
-      ? "bg-[#b2525c] text-white"
-      : "bg-gray-100 hover:bg-pink-200"
-  }`}
->
-  {slot}
-</button>
-                          ))}
-                        </div>
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <Button variant="outline" onClick={prevStep}><ArrowLeft className="w-4 h-4 mr-2" /> Retour</Button>
-                <Button onClick={nextStep} disabled={!selectedDate || !selectedTime} className="bg-[#b2525c] text-white">
-                  Étape suivante <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </div>
-          )}
+{currentStep === 2 && (
+  <div className="space-y-4">
+    <div className="text-center">
+      <h2 className="text-xl font-bold mb-1">Sélectionnez la date et l’heure</h2>
+      <p className="text-sm text-muted-foreground">
+        Choisissez votre créneau de rendez-vous préféré
+      </p>
+    </div>
+
+    {/* ✅ Horizontal scroll version */}
+    <div className="overflow-x-auto flex gap-3 pb-2">
+      {weekDays.map((day) => (
+        <div key={day.toISOString()} className="min-w-[120px]">
+          <div className="text-center font-semibold mb-1 text-xs">
+            {formatDate(day)}
+          </div>
+          <div className="space-y-1">
+            {getAvailableTimes(day).map((slot) => (
+              <button
+                key={slot}
+                onClick={() => {
+                  setSelectedDate(day.toISOString().split("T")[0]);
+                  setSelectedTime(slot);
+                }}
+                className={`w-full py-1.5 rounded text-xs transition ${
+                  selectedDate === day.toISOString().split("T")[0] &&
+                  selectedTime === slot
+                    ? "bg-[#b2525c] text-white"
+                    : "bg-gray-100 hover:bg-pink-200"
+                }`}
+              >
+                {slot}
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div className="flex flex-col gap-2">
+      <Button variant="outline" onClick={prevStep} className="w-full">
+        <ArrowLeft className="w-4 h-4 mr-2" /> Retour
+      </Button>
+      <Button
+        onClick={nextStep}
+        disabled={!selectedDate || !selectedTime}
+        className="bg-[#b2525c] text-white w-full"
+      >
+        Étape suivante <ArrowRight className="w-4 h-4 ml-2" />
+      </Button>
+    </div>
+  </div>
+)}
+
 
           {/* Step 3: Personal Details */}
           {currentStep === 3 && (
