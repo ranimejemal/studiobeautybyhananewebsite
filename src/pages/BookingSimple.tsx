@@ -76,20 +76,41 @@ const Booking = () => {
     }
   }, [location.state]);
 
-  const availableTimes = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"];
-  const formatDate = (date: Date) => date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "short" });
   const getWeekDays = (start: Date) => {
     const days = [];
     const current = new Date(start);
     for (let i = 0; i < 7; i++) {
-      if (current.getDay() !== 0) days.push(new Date(current));
+      days.push(new Date(current));
       current.setDate(current.getDate() + 1);
     }
     return days;
   };
-  const weekDays = getWeekDays(new Date());
+
+  const [startDate] = useState(new Date());
+  const weekDays = getWeekDays(startDate);
+
+  // Horaires disponibles
+  const getavailableTimes = (day: Date) => {
+  const dayOfWeek = day.getDay();
+  if (dayOfWeek === 6) {
+    // samedi
+    return ["11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+  }
+  // dimanche ou autre jour
+  return ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+};
+
+
+  const formatDate = (date: Date) =>
+    date.toLocaleDateString("fr-FR", {
+      weekday: "long",
+      day: "numeric",
+      month: "short",
+    });
+
   const nextStep = () => currentStep < 4 && setCurrentStep(currentStep + 1);
   const prevStep = () => currentStep > 1 && setCurrentStep(currentStep - 1);
+
   const formatPrice = (price: string | number) => typeof price === "number" ? `${price}€` : price;
 
   const handleSubmit = async () => {
@@ -171,41 +192,55 @@ const Booking = () => {
             )}
 
             {/* Step 2: Date & Time */}
-            {currentStep === 2 && (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold mb-2">Sélectionnez la date et l’heure</h2>
-                  <p className="text-muted-foreground text-sm">Choisissez votre créneau de rendez-vous préféré</p>
-                </div>
-                <div className="overflow-x-auto">
-                  <div className="grid grid-cols-6 gap-4">
-                    {weekDays.map((day) => (
-                      <div key={day.toISOString()} className="flex flex-col">
-                        <div className="text-center font-semibold mb-2">{formatDate(day)}</div>
-                        <div className="space-y-2">
-                          {availableTimes.map((slot) => (
-                            <button
-                              key={slot}
-                              onClick={() => {
-                                setSelectedDate(day.toISOString().split("T")[0]);
-                                setSelectedTime(slot);
-                              }}
-                              className={`w-full py-2 rounded transition ${selectedDate === day.toISOString().split("T")[0] && selectedTime === slot ? "bg-[#b2525c] text-white" : "bg-gray-100 hover:bg-pink-200"}`}
-                            >
-                              {slot}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex justify-between">
-                  <Button variant="outline" onClick={prevStep}><ArrowLeft className="w-4 h-4 mr-2" /> Retour</Button>
-                  <Button onClick={nextStep} disabled={!selectedDate || !selectedTime} className="bg-[#b2525c] text-white">Étape suivante <ArrowRight className="w-4 h-4 ml-2" /></Button>
-                </div>
-              </div>
-            )}
+{currentStep === 2 && (
+  <div className="space-y-6">
+    <div className="text-center">
+      <h2 className="text-2xl font-bold mb-2">Sélectionnez la date et l’heure</h2>
+      <p className="text-muted-foreground text-sm">Choisissez votre créneau de rendez-vous préféré</p>
+    </div>
+    <div className="overflow-x-auto">
+      <div className="grid grid-cols-6 gap-4">
+        {weekDays.map((day) => (
+          <div key={day.toISOString()} className="flex flex-col">
+            <div className="text-center font-semibold mb-2">{formatDate(day)}</div>
+            <div className="space-y-2">
+              {getavailableTimes(day).map((slot) => (
+                <button
+                  key={slot}
+                  onClick={() => {
+                    setSelectedDate(day.toISOString().split("T")[0]);
+                    setSelectedTime(slot);
+                  }}
+                  className={`w-full py-2 rounded transition ${
+                    selectedDate === day.toISOString().split("T")[0] &&
+                    selectedTime === slot
+                      ? "bg-[#b2525c] text-white"
+                      : "bg-gray-100 hover:bg-pink-200"
+                  }`}
+                >
+                  {slot}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div className="flex justify-between">
+      <Button variant="outline" onClick={prevStep}>
+        <ArrowLeft className="w-4 h-4 mr-2" /> Retour
+      </Button>
+      <Button
+        onClick={nextStep}
+        disabled={!selectedDate || !selectedTime}
+        className="bg-[#b2525c] text-white"
+      >
+        Étape suivante <ArrowRight className="w-4 h-4 ml-2" />
+      </Button>
+    </div>
+  </div>
+)}
+
 
             {/* Step 3: Personal Details */}
             {currentStep === 3 && (
