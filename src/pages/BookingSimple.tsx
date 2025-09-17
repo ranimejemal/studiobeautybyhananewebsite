@@ -25,15 +25,16 @@ const treatmentCategories = [
       { name: "Blanchiment Dentaire", description: "Éclaircissement des dents en douceur pour un sourire éclatant.", price: 70, duration: "75 min", image: "/Tired of living with a yellow smile_ At Cosmetic Dental Texas, we have got you covered! https___cosmeticdentaltexas_com_houston-services_teeth-whitening_.jpg" },
       { name: "Morpheus8", description: "Traitement anti-âge innovant combinant radiofréquence et microneedling pour raffermir la peau.", price: "À partir de 100", duration: "75 min", image: "/morph.jpg" },
       { name: "Skin Booster Soin", description: "Injection hydratante qui améliore la qualité de la peau et ravive son éclat.", price: "À partir de 120", duration: "75 min", image: "/Skinvive by Juvéderm Treatment in Raleigh, NC _ Beauty CO.jpg" },
+      { name: "Botox", description: "Injections de toxine botulique pour lisser les rides d’expression et rajeunir le visage.", price: "À partir de 150", duration: "30-45 min", image: "/botox.jpg" },
       { name: "Détatouage", description: "Suppression progressive et sécurisée des tatouages ou maquillage permanent.", price: 70, duration: "75 min", image: "/Curs Cursuri de Estetica - Start Academy.jpg" },
       { name: "Bb Glow", description: "Soin perfecteur qui unifie le teint et donne un effet peau de bébé.", price: 70, duration: "75 min", image: "/BB Glow (1).jpg" },
       { name: "Rehaussement des Cils", description: "Courbure naturelle et durable des cils pour un regard intense.", price: 35, duration: "75 min", image: "/Lash lifting  Cílios.jpg" },
       { name: "Rehaussement des Cils avec Teinture", description: "Courbure et coloration des cils pour un effet mascara longue durée.", price: 40, duration: "75 min", image: "/Wimper Lift.jpg" },
       { name: "Peeling Zina", description: "Exfoliation douce qui élimine les impuretés et ravive l’éclat du teint.", price: 70, duration: "75 min", image: "/download - 2025-09-12T190126.859.jpg" },
       { name: "Peeling Carbon", description: "Soin au laser avec masque carbone pour resserrer les pores et purifier la peau.", price: 70, duration: "75 min", image: "/Rejuvenate Your Skin with Carbon Laser Treatment at Estatico Facialbar.jpg" },
-      { name: "Brûlage de Graisse double menton KYBELLA", description: "Injections ciblées pour dissoudre les graisses localisées.", price: "À partir de 120 (selon les zone)", duration: "60 min", image: "/How Dermal Fillers Can Change The Jawline_ Before and After.jpg" },
-      { name: "Hyaluronidase", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 120, duration: "60 min", image: "/Révolutionnez votre routine beauté avec l'Hyaluron Pen.jpg" },
-      { name: "Epilation Laser Diode Visage Complet(lèvres , cou , menton)", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 60, duration: "60 min", image: "/Лазерная эпиляция эстетика.jpg" },
+      { name: "Brûlage de Graisse double menton KYBELLA", description: "Injections ciblées pour dissoudre les graisses localisées.", price: "À partir de 120 (selon les zones)", duration: "60 min", image: "/How Dermal Fillers Can Change The Jawline_ Before and After.jpg" },
+      { name: "Hyaluronidase", description: "Enzyme utilisée pour corriger ou dissoudre l’acide hyaluronique injecté.", price: 120, duration: "60 min", image: "/Révolutionnez votre routine beauté avec l'Hyaluron Pen.jpg" },
+      { name: "Épilation Laser Diode Visage Complet (lèvres, cou, menton)", description: "Élimination durable des poils du visage avec la technologie laser diode.", price: 60, duration: "60 min", image: "/Лазерная эпиляция эстетика.jpg" },
     ],
   },
   {
@@ -42,10 +43,10 @@ const treatmentCategories = [
     treatments: [
       { name: "Lemon Bottle selon les parties", description: "Injections ciblées pour dissoudre les graisses localisées.", price: "À partir de 100", duration: "60 min", image: "/download - 2025-09-12T215228.350.jpg" },
       { name: "Nuque", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 40, duration: "60 min", image: "/Benefits of Retinol. - 2025-09-12T224837.361.png" },
-      { name: "Aiselles", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 60, duration: "60 min", image: "/download - 2025-09-12T223842.759.jpg" },
+      { name: "Aisselles", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 60, duration: "60 min", image: "/download - 2025-09-12T223842.759.jpg" },
       { name: "Demi-bras", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 70, duration: "60 min", image: "/Laser hair removal on the hand on a light background hair removal depilation _ Premium Photo.jpg" },
-      { name: "3 zones aux chois", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 99, duration: "60 min", image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg" },
-      { name: "5 zones aux chois", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 130, duration: "60 min", image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg" },
+      { name: "3 zones au choix", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 99, duration: "60 min", image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg" },
+      { name: "5 zones au choix", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 130, duration: "60 min", image: "/APRENDA A FAZER DEPILAÇÃO A LASER.jpg" },
       { name: "Corps Complet", description: "Injections ciblées pour dissoudre les graisses localisées.", price: 150, duration: "60 min", image: "/download - 2025-09-12T224050.429.jpg" },
     ],
   },
@@ -76,30 +77,29 @@ const Booking = () => {
     }
   }, [location.state]);
 
-  const getWeekDays = (start: Date) => {
-    const days = [];
-    const current = new Date(start);
-    for (let i = 0; i < 7; i++) {
-      days.push(new Date(current));
-      current.setDate(current.getDate() + 1);
-    }
-    return days;
-  };
+  const getWeekDays = (start: Date, numberOfDays = 14) => {
+  const days = [];
+  const current = new Date(start);
+  for (let i = 0; i < numberOfDays; i++) {
+    days.push(new Date(current));
+    current.setDate(current.getDate() + 1);
+  }
+  return days;
+};
 
-  const [startDate] = useState(new Date());
-  const weekDays = getWeekDays(startDate);
+const [startDate] = useState(new Date());
+const weekDays = getWeekDays(startDate, 14); // ← 14 jours = 2 semaines
 
   // Horaires disponibles
   const getavailableTimes = (day: Date) => {
-  const dayOfWeek = day.getDay();
-  if (dayOfWeek === 6) {
-    // samedi
-    return ["11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
-  }
-  // dimanche ou autre jour
-  return ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
-};
-
+    const dayOfWeek = day.getDay();
+    if (dayOfWeek === 6) {
+      // samedi → commence à 11h
+      return ["11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+    }
+    // autres jours → commence à 9h
+    return ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+  };
 
   const formatDate = (date: Date) =>
     date.toLocaleDateString("fr-FR", {
@@ -151,95 +151,115 @@ const Booking = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f3e1e3] py-8">
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-foreground mb-4">
-              Réservez votre <span className="hero-text">Rendez-vous</span>
-            </h1>
-            <p className="text-sm text-black">Suivez ces étapes simples pour planifier votre soin de beauté</p>
-          </div>
+    <div className="min-h-screen bg-[#f3e1e3] py-6">
+  <div className="container mx-auto px-3">
+    <div className="max-w-3xl mx-auto">
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-bold text-foreground mb-2">
+          Réservez votre <span className="hero-text">Rendez-vous</span>
+        </h1>
+        <p className="text-xs text-black">
+          Suivez ces étapes simples pour planifier votre soin de beauté
+        </p>
+      </div>
 
-          <Card className="p-8 glass-card">
-            {/* Step 1: Treatment */}
-            {currentStep === 1 && (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold mb-2">Sélectionnez un soin</h2>
-                  <p className="text-muted-foreground">Choisissez le service souhaité</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {allTreatments.map((treatment) => (
-                    <Card
-                      key={treatment.id}
-                      className={`p-4 cursor-pointer border-2 transition-all ${selectedTreatment?.id === treatment.id ? "border-[#b2525c] bg-[#b2525c]/5" : "border-border"}`}
-                      onClick={() => setSelectedTreatment(treatment)}
-                    >
-                      <h3 className="font-semibold">{treatment.name}</h3>
-                      <p className="text-sm">{treatment.description}</p>
-                      <Badge variant="secondary">{treatment.duration}</Badge>
-                      <p className="text-xl font-bold text-[#b2525c] mt-2">{formatPrice(treatment.price)}</p>
-                    </Card>
-                  ))}
-                </div>
-                <div className="flex justify-end">
-                  <Button onClick={nextStep} disabled={!selectedTreatment} className="bg-[#b2525c] text-white">
-                    Étape suivante <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 2: Date & Time */}
-{currentStep === 2 && (
-  <div className="space-y-6">
-    <div className="text-center">
-      <h2 className="text-2xl font-bold mb-2">Sélectionnez la date et l’heure</h2>
-      <p className="text-muted-foreground text-sm">Choisissez votre créneau de rendez-vous préféré</p>
-    </div>
-    <div className="overflow-x-auto">
-      <div className="grid grid-cols-6 gap-4">
-        {weekDays.map((day) => (
-          <div key={day.toISOString()} className="flex flex-col">
-            <div className="text-center font-semibold mb-2">{formatDate(day)}</div>
-            <div className="space-y-2">
-              {getavailableTimes(day).map((slot) => (
-                <button
-                  key={slot}
-                  onClick={() => {
-                    setSelectedDate(day.toISOString().split("T")[0]);
-                    setSelectedTime(slot);
-                  }}
-                  className={`w-full py-2 rounded transition ${
-                    selectedDate === day.toISOString().split("T")[0] &&
-                    selectedTime === slot
-                      ? "bg-[#b2525c] text-white"
-                      : "bg-gray-100 hover:bg-pink-200"
+      <Card className="p-5 glass-card">
+        {/* Step 1: Treatment */}
+        {currentStep === 1 && (
+          <div className="space-y-4">
+            <div className="text-center">
+              <h2 className="text-xl font-bold mb-1">Sélectionnez un soin</h2>
+              <p className="text-sm text-muted-foreground">
+                Choisissez le service souhaité
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-3">
+              {allTreatments.map((treatment) => (
+                <Card
+                  key={treatment.id}
+                  className={`p-3 cursor-pointer border-2 transition-all ${
+                    selectedTreatment?.id === treatment.id
+                      ? "border-[#b2525c] bg-[#b2525c]/5"
+                      : "border-border"
                   }`}
+                  onClick={() => setSelectedTreatment(treatment)}
                 >
-                  {slot}
-                </button>
+                  <h3 className="font-semibold text-sm">{treatment.name}</h3>
+                  <p className="text-xs">{treatment.description}</p>
+                  <Badge variant="secondary" className="text-xs mt-1">
+                    {treatment.duration}
+                  </Badge>
+                  <p className="text-lg font-bold text-[#b2525c] mt-1">
+                    {formatPrice(treatment.price)}
+                  </p>
+                </Card>
               ))}
             </div>
+            <div className="flex">
+              <Button
+                onClick={nextStep}
+                disabled={!selectedTreatment}
+                className="bg-[#b2525c] text-white w-full"
+              >
+                Étape suivante <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
-    <div className="flex justify-between">
-      <Button variant="outline" onClick={prevStep}>
-        <ArrowLeft className="w-4 h-4 mr-2" /> Retour
-      </Button>
-      <Button
-        onClick={nextStep}
-        disabled={!selectedDate || !selectedTime}
-        className="bg-[#b2525c] text-white"
-      >
-        Étape suivante <ArrowRight className="w-4 h-4 ml-2" />
-      </Button>
-    </div>
-  </div>
-)}
+        )}
+
+        {/* Step 2: Date & Time */}
+        {currentStep === 2 && (
+          <div className="space-y-4">
+            <div className="text-center">
+              <h2 className="text-xl font-bold mb-1">
+                Sélectionnez la date et l’heure
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Choisissez votre créneau de rendez-vous préféré
+              </p>
+            </div>
+            <div className="overflow-x-auto flex gap-3 pb-2">
+              {weekDays.map((day) => (
+                <div key={day.toISOString()} className="min-w-[120px]">
+                  <div className="text-center font-semibold mb-1 text-xs">
+                    {formatDate(day)}
+                  </div>
+                  <div className="space-y-1">
+                    {getavailableTimes(day).map((slot) => (
+                      <button
+                        key={slot}
+                        onClick={() => {
+                          setSelectedDate(day.toISOString().split("T")[0]);
+                          setSelectedTime(slot);
+                        }}
+                        className={`w-full py-1.5 rounded text-xs ${
+                          selectedDate === day.toISOString().split("T")[0] &&
+                          selectedTime === slot
+                            ? "bg-[#b2525c] text-white"
+                            : "bg-gray-100 hover:bg-pink-200"
+                        }`}
+                      >
+                        {slot}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col gap-2">
+              <Button variant="outline" onClick={prevStep} className="w-full">
+                <ArrowLeft className="w-4 h-4 mr-2" /> Retour
+              </Button>
+              <Button
+                onClick={nextStep}
+                disabled={!selectedDate || !selectedTime}
+                className="bg-[#b2525c] text-white w-full"
+              >
+                Étape suivante <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </div>
+        )}
 
 
             {/* Step 3: Personal Details */}

@@ -71,19 +71,18 @@ const Booking = () => {
   
 
    // Générer les 7 prochains jours (inclus samedi et dimanche)
-  const getWeekDays = (start: Date) => {
-    const days = [];
-    const current = new Date(start);
-    for (let i = 0; i < 7; i++) {
-      days.push(new Date(current));
-      current.setDate(current.getDate() + 1);
-    }
-    return days;
-  };
+  const getWeekDays = (start: Date, numberOfDays = 14) => {
+  const days = [];
+  const current = new Date(start);
+  for (let i = 0; i < numberOfDays; i++) {
+    days.push(new Date(current));
+    current.setDate(current.getDate() + 1);
+  }
+  return days;
+};
 
-  const [startDate] = useState(new Date());
-  const weekDays = getWeekDays(startDate);
-
+const [startDate] = useState(new Date());
+const weekDays = getWeekDays(startDate, 14);
   // Horaires disponibles
   const getAvailableTimes = (day: Date) => {
   const dayOfWeek = day.getDay();
